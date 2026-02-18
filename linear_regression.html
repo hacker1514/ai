@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>𝙽𝙸𝚁𝙰𝙽𝙹𝙰𝙽 𝙲𝚁𝙴𝙰𝚃𝙸𝙾𝙽𝚂</title>
+		<link charset="UTF-8">
+	</head>
+	<style>
+		body{
+			background-color:teal;
+			color:maroon;
+		     }
+		#f{
+			color:black;
+		  }
+	</style>
+	<body>
+		<h1>𝙻𝚒𝚗𝚎𝚊𝚛 𝚁𝚎𝚐𝚛𝚎𝚜𝚜𝚒𝚘𝚗 𝙼𝚘𝚍𝚎𝚕</h1>
+		<h1 style="color:yellow;">1 . 𝚃𝚛𝚊𝚒𝚗</h1>
+		<input type="file" id="f" accept=".json"></input><br></br>
+		<button onclick="train()">𝙿𝚛𝚘𝚌𝚎𝚎𝚍 𝚃𝚛𝚊𝚒𝚗𝚒𝚗𝚐</button>
+		<h1 style="color:yellow;">2 . 𝚃𝚎𝚜𝚝</h1>
+		<input type="text" placeholder="𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 ..."  id="test" ></input>
+		<button onclick="predict()">𝙿𝚛𝚎𝚍𝚒𝚌𝚝</button>
+		<h1 style="color:yellow;">3. 𝙾𝚞𝚝𝚙𝚞𝚝</h1>
+		<div id="output" style="color:white;"></div>
+		<script>
+			function train(){
+				let fn = document.getElementById("f").files[0];
+				let output = document.getElementById("output"); 
+				if(fn==null){
+					output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙲𝚑𝚘𝚘𝚜𝚎 𝙵𝚒𝚕𝚎 !";
+					}else{
+						let r = new FileReader();
+		    r.onload=()=>{
+			   let a=r.result;
+			   a=JSON.parse(a);
+			   let x = a[0].input;
+			   let y = a[0].output;
+								 t(x,y);
+			   };
+						r.readAsText(fn);
+					}
+		
+				}
+	let model=[0,0]
+	function t(x,y){
+		let output = document.getElementById("output");
+		let sx=0,sy=0,sxx=0,sxy=0,m,c,n=x.length;
+		for(let i=0;i<n;i++){
+			sx+=x[i];
+			sy+=y[i];
+			sxx+=(x[i]**2);
+			sxy+=(x[i]*y[i]);
+			}
+		m=(n*sxy-sx*sy)/(n*sxx-(sx)**2);
+		c=(sy-m*sx)/x.length;
+		model=[m,c];
+		output.innerText="𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢 𝚃𝚛𝚊𝚒𝚗𝚎𝚍 𝚊𝚗𝚍 𝙲𝚛𝚎𝚊𝚝𝚎𝚍 𝙼𝚘𝚍𝚎𝚕 !";
+		}
+	function predict(){
+		let input = document.getElementById("test").value;
+		let output = document.getElementById("output");
+		if(input==""){
+			output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 !";
+			}else{
+				input = Number(input);
+				let y = model[0]*input+model[1];
+				output.innerText="𝙿𝚛𝚎𝚍𝚒𝚌𝚝𝚒𝚘𝚗 : "+ y;
+				}
+		}
+		</script>
+	</body>
+</html>
