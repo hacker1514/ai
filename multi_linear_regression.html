@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>𝙽𝙸𝚁𝙰𝙽𝙹𝙰𝙽 𝙲𝚁𝙴𝙰𝚃𝙸𝙾𝙽𝚂</title>
+		<meta charset="UTF-8">
+	</head>
+	<style>
+		body{
+			background-color:teal;
+			color:maroon;
+		     }
+		#f{
+			color:black;
+		  }
+	</style>
+	<body>
+		<h1>𝙼𝚞𝚕𝚝𝚒 𝙻𝚒𝚗𝚎𝚊𝚛 𝚁𝚎𝚐𝚛𝚎𝚜𝚜𝚒𝚘𝚗 𝙼𝚘𝚍𝚎𝚕</h1>
+					<h1 style="color:yellow;">𝟷. 𝙳𝚊𝚝𝚊</h1>
+       <span style="color:black">𝙸𝚗𝚙𝚞𝚝 &nbsp;&nbsp;: </span><input type="text" placeholder="1,2|4,5" id="ip"></input>
+       <br><br>
+       <span style="color:black">𝙾𝚞𝚝𝚙𝚞𝚝 : </span><input type="text" placeholder="3,9" id="op"></input>
+
+
+		<h1 style="color:yellow;">2 . 𝚃𝚛𝚊𝚒𝚗</h1>
+		<button onclick="train()">𝙿𝚛𝚘𝚌𝚎𝚎𝚍 𝚃𝚛𝚊𝚒𝚗𝚒𝚗𝚐</button>
+		<h1 style="color:yellow;">3 . 𝚃𝚎𝚜𝚝</h1>
+		<input type="text" placeholder="𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 ..."  id="test" ></input>
+		<button onclick="predict()">𝙿𝚛𝚎𝚍𝚒𝚌𝚝</button>
+		<h1 style="color:yellow;">4. 𝙾𝚞𝚝𝚙𝚞𝚝</h1>
+		<div id="output" style="color:white;"></div>
+		<script>
+			function train(){
+				let ip = document.getElementById("ip").value;
+				let op = document.getElementById("op").value;
+				let output = document.getElementById("output"); 
+				if(ip=="" || op==""){
+					output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 𝚊𝚗𝚍 𝙾𝚞𝚝𝚙𝚞𝚝 𝙿𝚛𝚘𝚙𝚎𝚛𝚕𝚢 !";
+					}else{
+    			ip=ip.split('|')
+			op=op.split(',')
+			let inp=ip;
+			ip=[];
+			for(let i=0;i<op.length;i++){
+				op[i]=Number(op[i]);
+				let k=inp[i];
+				k=k.split(',')
+				for(let j=0;j<k.length;j++){
+					k[j]=Number(k[j]);
+					}
+				ip.push(k);
+				}
+				t(ip,op);
+								}
+		
+					}
+	let model=[0,0]
+	function t(x,y,lr=0.01,epochs=1000){
+		let output = document.getElementById("output");
+	let n = x.length;
+	let f = x[0].length;
+	let c=0;
+	let m = new Array(f).fill(0);
+	for(let e=0;e<epochs;e++){
+		for(let i=0;i<n;i++){
+			let p = c;
+			for(let j=0;j<f;j++){
+				p=p+m[j]*x[i][j];
+				}
+			let er = p - y[i];
+			for(let j=0;j<f;j++){
+				m[j]=m[j]-lr*er*x[i][j];
+				}
+			c = c - lr*er;
+			}
+		}		
+      model=[m,c];
+		output.innerText="𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢 𝚃𝚛𝚊𝚒𝚗𝚎𝚍 𝚊𝚗𝚍 𝙲𝚛𝚎𝚊𝚝𝚎𝚍 𝙼𝚘𝚍𝚎𝚕 !";
+		}
+	function predict(){
+		let x = document.getElementById("test").value;
+		let output = document.getElementById("output");
+      x=x.split(',')
+      for(let i=0;i<x.length;i++){
+		x[i]=Number(x[i])
+		}
+		if(x==""){
+			output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 !";
+			}else{
+					let y = model[1];
+		let f = x.length;
+		for(let i=0;i<f;i++){
+		y=y+model[0][i]*x[i];
+		}
+				output.innerText="𝙿𝚛𝚎𝚍𝚒𝚌𝚝𝚒𝚘𝚗 : "+ y;
+				}
+		}
+		</script>
+	</body>
+</html>
