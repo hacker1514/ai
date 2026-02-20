@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>𝙽𝙸𝚁𝙰𝙽𝙹𝙰𝙽 𝙲𝚁𝙴𝙰𝚃𝙸𝙾𝙽𝚂</title>
+		<meta charset="UTF-8">
+	</head>
+	<style>
+		body{
+			background-color:teal;
+			color:maroon;
+		}
+		#f{
+			color:black;
+		}
+	</style>
+	<body>
+
+	<h1>𝙺-𝙽𝚎𝚊𝚛𝚎𝚜𝚝 𝙽𝚎𝚒𝚐𝚑𝚋𝚘𝚞𝚛</h1>
+
+	<h1 style="color:yellow;">𝟷. 𝙳𝚊𝚝𝚊</h1>
+	<span style="color:black">𝙸𝚗𝚙𝚞𝚝 : </span>
+	<input type="text" placeholder="1,2|4,5" id="ip">
+	<br><br>
+	<span style="color:black">𝙾𝚞𝚝𝚙𝚞𝚝 : </span>
+	<input type="text" placeholder="1,0" id="op">
+
+	<h1 style="color:yellow;">2. 𝙺-𝚅𝚊𝚕𝚞𝚎</h1>
+	<span style="color:black">𝙸𝚗𝚙𝚞𝚝 : </span>
+	<input type="text" placeholder="3" id="k_value">
+
+	<h1 style="color:yellow;">3 . 𝚃𝚛𝚊𝚒𝚗</h1>
+	<button onclick="train()">𝙿𝚛𝚘𝚌𝚎𝚎𝚍 𝚃𝚛𝚊𝚒𝚗𝚒𝚗𝚐</button>
+
+	<h1 style="color:yellow;">4 . 𝚃𝚎𝚜𝚝</h1>
+	<input type="text" placeholder="𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 ..." id="test">
+	<button onclick="predict()">𝙿𝚛𝚎𝚍𝚒𝚌𝚝</button>
+
+	<h1 style="color:yellow;">5. 𝙾𝚞𝚝𝚙𝚞𝚝</h1>
+	<div id="output" style="color:white;"></div>
+
+	<script>
+
+	let model = [0,0]
+
+	function distance(a,b){
+		let d=0;
+		let n=a.length;
+		for(let i=0;i<n;i++){
+			d+=(b[i]-a[i])**2;
+		}
+		return Math.sqrt(d);
+	}
+
+	function train(){
+		let ip = document.getElementById("ip").value;
+		let op = document.getElementById("op").value;
+		let output = document.getElementById("output");
+
+		if(ip=="" || op==""){
+			output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 𝚊𝚗𝚍 𝙾𝚞𝚝𝚙𝚞𝚝 𝙿𝚛𝚘𝚙𝚎𝚛𝚕𝚢 !";
+		}else{
+
+			ip = ip.split('|')
+			op = op.split(',')
+
+			let inp = ip;
+			ip = [];
+
+			for(let i=0;i<op.length;i++){
+				op[i] = Number(op[i]);
+				let k = inp[i];
+				k = k.split(',')
+				for(let j=0;j<k.length;j++){
+					k[j] = Number(k[j]);
+				}
+				ip.push(k);
+			}
+
+			model = [ip,op];
+
+			output.innerText="𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢 𝚃𝚛𝚊𝚒𝚗𝚎𝚍 𝚊𝚗𝚍 𝙲𝚛𝚎𝚊𝚝𝚎𝚍 𝙼𝚘𝚍𝚎𝚕 !";
+		}
+	}
+
+	function predict(){
+
+		let k = Number(document.getElementById("k_value").value);
+		let x = document.getElementById("test").value;
+		let output = document.getElementById("output");
+
+		if(x==""){
+			output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 !";
+			return;
+		}
+
+		x = x.split(',')
+		for(let i=0;i<x.length;i++){
+			x[i] = Number(x[i])
+		}
+
+		let point = x;
+		let data = model[0];
+		let labels = model[1];
+
+		let n = data.length;
+		let dist=[];
+
+		for(let i=0;i<n;i++){
+			dist.push([distance(data[i],point),labels[i]]);
+		}
+
+		dist.sort((a,b)=>a[0]-b[0]);
+
+		let c1=0;
+		let c2=0;
+
+		for(let i=0;i<k;i++){
+			if(dist[i][1]==1){
+				c1++;
+			}else{
+				c2++;
+			}
+		}
+
+		let y = c1>c2?1:0;
+
+		output.innerText="𝙿𝚛𝚎𝚍𝚒𝚌𝚝𝚒𝚘𝚗 : "+ y;
+	}
+
+	</script>
+
+	</body>
+</html>
