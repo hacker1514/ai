@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>𝙽𝙸𝚁𝙰𝙽𝙹𝙰𝙽 𝙲𝚁𝙴𝙰𝚃𝙸𝙾𝙽𝚂</title>
-		<link charset="UTF-8">
+		<meta charset="UTF-8">
 	</head>
 	<style>
 		body{
@@ -15,30 +15,34 @@
 	</style>
 	<body>
 		<h1>𝙻𝚒𝚗𝚎𝚊𝚛 𝚁𝚎𝚐𝚛𝚎𝚜𝚜𝚒𝚘𝚗 𝙼𝚘𝚍𝚎𝚕</h1>
-		<h1 style="color:yellow;">1 . 𝚃𝚛𝚊𝚒𝚗</h1>
-		<input type="file" id="f" accept=".json"></input><br></br>
+					<h1 style="color:yellow;">𝟷. 𝙳𝚊𝚝𝚊</h1>
+       <span style="color:black">𝙸𝚗𝚙𝚞𝚝 &nbsp;&nbsp;: </span><input type="text" placeholder="1,2,3,..." id="ip"></input>
+       <br><br>
+       <span style="color:black">𝙾𝚞𝚝𝚙𝚞𝚝 : </span><input type="text" placeholder="10,20,30,..." id="op"></input>
+
+
+		<h1 style="color:yellow;">2 . 𝚃𝚛𝚊𝚒𝚗</h1>
 		<button onclick="train()">𝙿𝚛𝚘𝚌𝚎𝚎𝚍 𝚃𝚛𝚊𝚒𝚗𝚒𝚗𝚐</button>
-		<h1 style="color:yellow;">2 . 𝚃𝚎𝚜𝚝</h1>
+		<h1 style="color:yellow;">3 . 𝚃𝚎𝚜𝚝</h1>
 		<input type="text" placeholder="𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 ..."  id="test" ></input>
 		<button onclick="predict()">𝙿𝚛𝚎𝚍𝚒𝚌𝚝</button>
-		<h1 style="color:yellow;">3. 𝙾𝚞𝚝𝚙𝚞𝚝</h1>
+		<h1 style="color:yellow;">4. 𝙾𝚞𝚝𝚙𝚞𝚝</h1>
 		<div id="output" style="color:white;"></div>
 		<script>
 			function train(){
-				let fn = document.getElementById("f").files[0];
+				let ip = document.getElementById("ip").value;
+				let op = document.getElementById("op").value;
 				let output = document.getElementById("output"); 
-				if(fn==null){
-					output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙲𝚑𝚘𝚘𝚜𝚎 𝙵𝚒𝚕𝚎 !";
+				if(ip=="" || op==""){
+					output.innerText="𝙿𝚕𝚎𝚊𝚜𝚎 𝙴𝚗𝚝𝚎𝚛 𝙸𝚗𝚙𝚞𝚝 𝚊𝚗𝚍 𝙾𝚞𝚝𝚙𝚞𝚝 𝙿𝚛𝚘𝚙𝚎𝚛𝚕𝚢 !";
 					}else{
-						let r = new FileReader();
-		    r.onload=()=>{
-			   let a=r.result;
-			   a=JSON.parse(a);
-			   let x = a[0].input;
-			   let y = a[0].output;
-								 t(x,y);
-			   };
-						r.readAsText(fn);
+			ip=ip.split(',');
+			op=op.split(',');
+			for(let i=0;i<ip.length;i++){
+				ip[i]=Number(ip[i]);
+				op[i]=Number(op[i]);
+				}
+			t(ip,op);
 					}
 		
 				}
